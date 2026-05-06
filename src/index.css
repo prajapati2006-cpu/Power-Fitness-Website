@@ -65,6 +65,7 @@ body:not(.has-custom-cursor) {
   transform: translate(-50%, -50%);
   transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
   box-shadow: 0 0 12px var(--primary), 0 0 24px var(--primary-glow);
+  will-change: transform;
 }
 
 .cursor-ring {
@@ -77,6 +78,7 @@ body:not(.has-custom-cursor) {
   z-index: 99998;
   transform: translate(-50%, -50%);
   transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+  will-change: transform;
 }
 
 .cursor-dot.hovering {
@@ -90,7 +92,7 @@ body:not(.has-custom-cursor) {
   border-color: var(--primary);
 }
 
-/* Grain overlay */
+/* Grain overlay - optimized for performance */
 .grain-overlay {
   position: relative;
 }
@@ -98,8 +100,10 @@ body:not(.has-custom-cursor) {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.05;
+  /* Replaced heavy SVG filter with a lightweight static base64 noise pattern */
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAAAAABJRYbJAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfmCAsNBB2eE2ZTAAAAIklEQVQ4y2NgwASMDGgKEE2dYhQbpZijYBQbB2MUUxSMAYpZAAEEz4nKAAAAAElFTkSuQmCC");
+  background-repeat: repeat;
+  opacity: 0.04;
   pointer-events: none;
   z-index: 1;
 }
